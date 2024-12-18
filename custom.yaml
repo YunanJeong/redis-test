@@ -1,0 +1,37 @@
+master:
+  persistence:
+    enabled: false
+  # service:
+  #   type: LoadBalancer
+replica:
+  replicaCount: 2
+  persistence:
+    enabled: false
+  # service:
+  #   type: LoadBalancer
+
+sentinel:
+  enabled: true
+  # service:
+  #   type: LoadBalancer
+  masterService:
+    ## @param sentinel.masterService.enabled Enable master service pointing to the current master (experimental)
+    ## NOTE: rbac.create need to be set to true
+    ##
+    enabled: true
+    ## @param sentinel.masterService.type Redis&reg; Sentinel master service type
+    ##
+    type: LoadBalancer
+    ## @param sentinel.masterService.ports.redis Redis&reg; service port for Redis&reg;
+    ##
+    ports:
+      redis: 6379
+
+##
+rbac:
+  ## @param rbac.create Specifies whether RBAC resources should be created
+  ##
+  create: true
+
+metrics:
+  enabled: true
