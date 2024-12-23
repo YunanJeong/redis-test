@@ -43,4 +43,16 @@ helm upgrade my-redis bitnami/redis --version 20.6.0 -f custom.yaml
 - 만약 양방향 통신이 불가능한 환경이라면 애초에 Redis보다 다른 툴을 쓰는 것이 적합하다고 판단 가능
 - 게다가 Redis는 인메모리방식이라 단독 운용되는 빅데이터급 도구라고 보기는 힘듦. Kafka 등 대부분 빅데이터 플랫폼은 디스크 기반으로 설계됨
   - Redis도 디스크 사용과 클러스터링을 통한 증설이 가능하나 나중에 추가된 기능이며, 이런 것들이 Redis의 주 목적이라 보기 힘듦
-  - Kafka, RabbitMQ와 비슷한 역할을 수행하면서 경량의 플랫폼이 필요할 때 사용하기 딱 좋음!
+  - `Kafka, RabbitMQ와 비슷한 역할을 수행하면서 경량의 플랫폼이 필요할 때` 사용하기 딱 좋음!
+
+## redis-cli
+
+- redis 클라이언트 도구
+- redis 설치시 포함(개별 설치가 불가능한건 아닌데 일반적이지 않음)
+- 서드파티 cli가 있지만 특수목적이 아닌 이상 그냥 redis-cli를 많이 씀
+- 외부 관리 필요시 UI 사용
+
+## UI
+
+- 공식지원: RedisInsight
+- 서드파티: Medis, Redis Desktop Manager (RDM)
