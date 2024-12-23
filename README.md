@@ -45,14 +45,74 @@ helm upgrade my-redis bitnami/redis --version 20.6.0 -f custom.yaml
   - Redis도 디스크 사용과 클러스터링을 통한 증설이 가능하나 나중에 추가된 기능이며, 이런 것들이 Redis의 주 목적이라 보기 힘듦
   - `Kafka, RabbitMQ와 비슷한 역할을 수행하면서 경량의 플랫폼이 필요할 때` 사용하기 딱 좋음!
 
-## redis-cli
-
-- redis 클라이언트 도구
-- redis 설치시 포함(개별 설치가 불가능한건 아닌데 일반적이지 않음)
-- 서드파티 cli가 있지만 특수목적이 아닌 이상 그냥 redis-cli를 많이 씀
-- 외부 관리 필요시 UI 사용
-
 ## UI
 
 - 공식지원: RedisInsight
 - 서드파티: Medis, Redis Desktop Manager (RDM)
+
+## redis-cli
+
+- redis 클라이언트 도구
+- 인터프리터 방식
+- cli는 개발용, 단순 테스트용에 가까움
+  - 운영시 UI 사용
+  - 실사용시 클라이언트 앱 코드에서 라이브러리로 접근 (redis-py 등)
+- redis 설치시 포함(개별 설치가 불가능한건 아닌데 일반적이지 않음)
+- 서드파티 cli가 있지만 특수목적이 아닌 이상 그냥 redis-cli를 많이 씀
+
+### 기본 테스트 (Key-Value 저장, 조회, 삭제)
+
+- 대화형 모드
+
+```sh
+# Interactive Mode
+# redis 접속
+redis-cli
+```
+
+```redis-cli
+SET mykey "Hello, Redis!"
+GET mykey
+
+EXISTS mykey
+
+DEL mykey
+GET mykey
+```
+
+- 비대화형 모드
+
+```sh
+# Non-interactive Mode
+# redis-cli 진입시 주석이 불가능하므로 이게 나을 수 있음
+redis-cli SET mykey "Hello, Redis!" && redis-cli GET mykey
+```
+
+```sh
+redis-cli <<EOF
+SET mykey "Hello, Redis!"
+GET mykey
+DEL mykey
+EOF
+```
+
+## redis의 데이터 타입
+
+- key 마다 타입 지정이 되어있다.
+- Kafka와 같은 실시간 스트림 데이터를 redis로 받으려면 Hash, List ,Stream 등 타입이 적절
+  - 단순 String의 경우 key에 신규값을 쓰면 덮어씌워진다.
+  - 타 플랫폼의 계층구조를 다음과 같은 key 이름으로 받는 것이 일반적이며, 필요에 따라 key 이름과 타입을 다르게 설계 가능
+  - e.g. `kafka:topic1:partition0`
+  
+| **데이터 타입**     | **설명**                         | **사용 사례**             |
+|---------------------|----------------------------------|---------------------------|
+| String              | 단일 값 저장                    | 캐시, JSON, 숫자 연산     |
+| Hash                | 필드-값 쌍 저장                 | 사용자 정보, 설정 저장     |
+| List                | 순서 있는 리스트                | 작업 큐, 대기열           |
+| Set                 | 중복 없는 집합                  | 유니크 태그, 아이디 저장   |
+| Sorted Set (ZSet)   | 정렬된 집합                     | 리더보드, 점수 기반 정렬  |
+| Stream              | 로그/메시지 스트림              | 실시간 데이터 처리        |
+| Bitmap              | 비트 수준 데이터 저장           | 출석 체크, 상태 추적      |
+| HyperLogLog         | 근사 중복 요소 계산             | 고유 방문자 수 계산       |
+| Geospatial          | 위치 데이터 및 거리 계산        | 지도 서비스, 근처 검색    |
+| Pub/Sub             | 메시지 발행 및 구독             | 알림 시스템, 실시간 채팅  |
