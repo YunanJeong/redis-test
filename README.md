@@ -87,7 +87,9 @@ GET mykey
 # Non-interactive Mode
 # redis-cli 진입시 주석이 불가능하므로 이게 나을 수 있음
 redis-cli SET mykey "Hello, Redis!" && redis-cli GET mykey
-redis-cli KEYS *
+
+# 따옴표 필요한 경우
+redis-cli KEYS '*'
 ```
 
 ```sh
