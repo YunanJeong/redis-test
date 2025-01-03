@@ -74,6 +74,7 @@ redis-cli
 SET mykey "Hello, Redis!"
 GET mykey
 
+KEYS *
 EXISTS mykey
 
 DEL mykey
@@ -86,6 +87,7 @@ GET mykey
 # Non-interactive Mode
 # redis-cli 진입시 주석이 불가능하므로 이게 나을 수 있음
 redis-cli SET mykey "Hello, Redis!" && redis-cli GET mykey
+redis-cli KEYS *
 ```
 
 ```sh
