@@ -100,6 +100,24 @@ DEL mykey
 EOF
 ```
 
+- 키 타입 확인 예
+
+```redis-cli
+TYPE redis-test.1735896660.0
+```
+
+- 전체 key 목록 조회(해시 타입)
+
+```redis-cli
+HGETALL "redis-test.1735896660.0"
+```
+
+- key에서 특정 필드 값 가져오기(해시 타입)
+
+```redis-cli
+HGET "redis-test.1735896660.0" "field_name"
+```
+
 ## redis의 데이터 타입
 
 - key 마다 타입 지정이 되어있다.
