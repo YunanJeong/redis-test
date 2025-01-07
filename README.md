@@ -12,8 +12,8 @@ redis-test
 ```sh
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-helm install my-redis bitnami/redis --version 20.6.0 -f custom.yaml
-helm upgrade my-redis bitnami/redis --version 20.6.0 -f custom.yaml
+helm install my-redis bitnami/redis --version 20.6.1 -f custom.yaml
+helm upgrade my-redis bitnami/redis --version 20.6.1 -f custom.yaml
 ```
 
 ## 네트워크 통신 방향
